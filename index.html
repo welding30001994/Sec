@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Sec</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #00fffc;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #00fffc;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #00fffc;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        h1 {
+            color: #00fffc;
+            text-shadow: 0 0 10px #00fffc;
+            margin-bottom: 30px;
+        }
+        input {
+            padding: 10px;
+            width: 200px;
+            background-color: #222;
+            border: 1px solid #00fffc;
+            color: #00fffc;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #005f5c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background-color: #00fffc;
+            color: #121212;
+            box-shadow: 0 0 15px #00fffc;
+        }
+        .sequence {
+            margin-top: 30px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .midpoint {
+            color: #ff00ff;
+            font-weight: bold;
+            font-size: 22px;
+            text-shadow: 0 0 10px #ff00ff;
+            margin: 20px 0;
+            padding: 10px;
+            border-top: 1px dashed #00fffc;
+            border-bottom: 1px dashed #00fffc;
+        }
+        .number {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: rgba(0, 255, 252, 0.1);
+            transition: all 0.3s;
+        }
+        .number:hover {
+            transform: scale(1.1);
+            background-color: rgba(0, 255, 252, 0.3);
+            box-shadow: 0 0 10px #00fffc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ANÁLISIS DE SECUENCIA FUTURISTA</h1>
+        <p>Ingrese un número de inicio para generar la secuencia:</p>
+        <input type="number" id="startNumber" step="0.01" placeholder="Ejemplo: 3250">
+        <button onclick="generateSequence()">GENERAR SECUENCIA</button>
+        
+        <div id="sequenceResult" class="sequence"></div>
+    </div>
+
+    <script>
+        const fullSequence = [
+            3316.50, 3311.00, 3307.70, 3303.53, 3298.90, 
+            3295.86, 3287.90, 3280.50, 3272.27, 3265.14, 
+            3257.60, 3254.90, 3250.00, 3246.10
+        ].reverse(); // Invertimos para tener el orden ascendente
+        
+        function generateSequence() {
+            const startInput = parseFloat(document.getElementById('startNumber').value);
+            if (isNaN(startInput)) {
+                alert("Por favor ingrese un número válido");
+                return;
+            }
+            
+            // Buscar el número más cercano en la secuencia
+            let startIndex = 0;
+            let minDiff = Infinity;
+            
+            for (let i = 0; i < fullSequence.length; i++) {
+                const diff = Math.abs(fullSequence[i] - startInput);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    startIndex = i;
+                }
+            }
+            
+            // Generar la secuencia desde el punto de inicio hasta el final
+            const resultSequence = fullSequence.slice(startIndex);
+            const midpointIndex = Math.floor(resultSequence.length / 2);
+            const midpointValue = resultSequence[midpointIndex];
+            
+            // Mostrar resultados
+            let resultHTML = "<h3>SECUENCIA GENERADA:</h3>";
+            
+            resultSequence.forEach((num, index) => {
+                resultHTML += `<span class="number">${num.toFixed(2)}</span>`;
+                if (index === midpointIndex - 1) {
+                    resultHTML += '<br>';
+                }
+            });
+            
+            resultHTML += `<div class="midpoint">PUNTO MEDIO: ${midpointValue.toFixed(2)}</div>`;
+            resultHTML += `<p>Secuencia desde ${resultSequence[0].toFixed(2)} hasta ${resultSequence[resultSequence.length-1].toFixed(2)}</p>`;
+            
+            document.getElementById('sequenceResult').innerHTML = resultHTML;
+        }
+    </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
